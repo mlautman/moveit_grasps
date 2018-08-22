@@ -450,7 +450,7 @@ bool GraspFilter::processCandidateGrasp(IkThreadStructPtr& ik_thread_struct)
   if (ik_thread_struct->verbose_ && false)
   {
     ik_thread_struct->ik_pose_.header.frame_id = ik_thread_struct->kin_solver_->getBaseFrame();
-    visual_tools_->publishZArrow(ik_thread_struct->ik_pose_.pose, rviz_visual_tools::RED, rviz_visual_tools::REGULAR,
+    visual_tools_->publishZArrow(ik_thread_struct->ik_pose_.pose, rviz_visual_tools::RED, rviz_visual_tools::MEDIUM,
                                  0.1);
   }
 
@@ -666,26 +666,26 @@ bool GraspFilter::visualizeGrasps(const std::vector<GraspCandidatePtr>& grasp_ca
     if (grasp_candidates[i]->grasp_filtered_by_ik_)
     {
       visual_tools_->publishZArrow(grasp_candidates[i]->grasp_.grasp_pose.pose, rviz_visual_tools::RED,
-                                   rviz_visual_tools::REGULAR, size);
+                                   rviz_visual_tools::MEDIUM, size);
     }
     else if (grasp_candidates[i]->pregrasp_filtered_by_ik_)
     {
       visual_tools_->publishZArrow(grasp_candidates[i]->grasp_.grasp_pose.pose, rviz_visual_tools::BLUE,
-                                   rviz_visual_tools::REGULAR, size);
+                                   rviz_visual_tools::MEDIUM, size);
     }
     else if (grasp_candidates[i]->grasp_filtered_by_cutting_plane_)
     {
       visual_tools_->publishZArrow(grasp_candidates[i]->grasp_.grasp_pose.pose, rviz_visual_tools::MAGENTA,
-                                   rviz_visual_tools::REGULAR, size);
+                                   rviz_visual_tools::MEDIUM, size);
     }
     else if (grasp_candidates[i]->grasp_filtered_by_orientation_)
     {
       visual_tools_->publishZArrow(grasp_candidates[i]->grasp_.grasp_pose.pose, rviz_visual_tools::YELLOW,
-                                   rviz_visual_tools::REGULAR, size);
+                                   rviz_visual_tools::MEDIUM, size);
     }
     else
       visual_tools_->publishZArrow(grasp_candidates[i]->grasp_.grasp_pose.pose, rviz_visual_tools::GREEN,
-                                   rviz_visual_tools::REGULAR, size);
+                                   rviz_visual_tools::MEDIUM, size);
   }
 
   // Publish in batch

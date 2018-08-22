@@ -1,16 +1,24 @@
 <launch>
 
-  <!-- Debug -->  
+  <!-- Debug -->
   <arg name="debug" default="false" />
   <arg unless="$(arg debug)" name="launch_prefix" value="" />
   <arg     if="$(arg debug)" name="launch_prefix" value="gdb --ex run --args" />
 
   <!-- Load Rviz -->
   <node name="$(anon rviz)" pkg="rviz" type="rviz" respawn="false"
-	args="-d $(find moveit_grasps)/launch/rviz/grasps.rviz" output="screen">
+	args="-d $(find moveit_grasps)/launch/rviz/grasps_robotiq_left.rviz" output="screen">
   </node>
 
   <!-- Publish world frame -->
   <node pkg="tf" type="static_transform_publisher" name="tf_publisher_world" args="0 0 0 0 0 0 /world /base 25" />
+    <include file="$(find rr_moveit_config)/launch/planning_context.launch">
+      <arg name="load_robot_description" value="true"/>
+    </include>
 
+    <group ns="grasp_poses_visualizer">
+      <!-- Which arm to use -->
+      <param name="ee_group_name" value="left_hand"/>
+      <rosparam command="load" file="$(find bin_picking)/config/robotiq_grasp_data.yaml"/>
+    </group>
 </launch>

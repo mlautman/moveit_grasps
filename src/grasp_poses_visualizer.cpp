@@ -43,12 +43,12 @@ namespace moveit_grasps
 // Size and location for randomly generated cuboids
 static const double CUBOID_MIN_SIZE = 0.02;
 static const double CUBOID_MAX_SIZE = 0.07;
-static const double CUBOID_WORKSPACE_MIN_X = 0.01;
+static const double CUBOID_WORKSPACE_MIN_X = 0.25;
 static const double CUBOID_WORKSPACE_MAX_X = 0.5;
-static const double CUBOID_WORKSPACE_MIN_Y = -0.5;
-static const double CUBOID_WORKSPACE_MAX_Y = 0.5;
-static const double CUBOID_WORKSPACE_MIN_Z = 0.0;
-static const double CUBOID_WORKSPACE_MAX_Z = 1.0;
+static const double CUBOID_WORKSPACE_MIN_Y = -0.75;
+static const double CUBOID_WORKSPACE_MAX_Y = -0.5;
+static const double CUBOID_WORKSPACE_MIN_Z = 1.0;
+static const double CUBOID_WORKSPACE_MAX_Z = 1.3;
 
 class GraspPosesVisualizer
 {
@@ -109,6 +109,8 @@ public:
     Eigen::Affine3d display_pose;
     bool text = false;
 
+    visual_tools_->prompt("SHOW OBJECT POSE");
+
     // SHOW OBJECT POSE
     visual_tools_->publishCuboid(cuboid_pose_, depth_, width_, height_);
     visual_tools_->publishAxis(cuboid_pose_, 0.05, 0.005);
@@ -123,12 +125,18 @@ public:
     visual_tools_->publishSphere(ee_pose.translation(), rviz_visual_tools::GREEN, 0.02);
     visual_tools_->publishText(ee_pose, "EE Pose", rviz_visual_tools::WHITE, rviz_visual_tools::XSMALL, text);
 
+    visual_tools_->trigger();
+    visual_tools_->prompt("SHOW GRASP POSE");
+
     // SHOW GRASP POSE
     Eigen::Affine3d grasp_pose;
     grasp_pose = ee_pose * grasp_data_->grasp_pose_to_eef_pose_.inverse();
     visual_tools_->publishAxis(grasp_pose, 0.05, 0.005);
     visual_tools_->publishSphere(grasp_pose.translation(), rviz_visual_tools::LIME_GREEN, 0.02);
     visual_tools_->publishText(grasp_pose, "Grasp Pose", rviz_visual_tools::WHITE, rviz_visual_tools::XSMALL, text);
+
+    visual_tools_->trigger();
+    visual_tools_->prompt("SHOW finger_to_palm_depth");
 
     // SHOW finger_to_palm_depth
     Eigen::Vector3d grasp_point = grasp_pose.translation();
@@ -145,6 +153,9 @@ public:
     text_pose.translation() += text_point - grasp_pose.translation();
     visual_tools_->publishText(text_pose, "finger_to_palm_depth", rviz_visual_tools::GREY, rviz_visual_tools::XSMALL,
                                text);
+
+    visual_tools_->trigger();
+    visual_tools_->prompt("SHOW PRE_GRASP_APPROACH");
 
     // SHOW PRE_GRASP_APPROACH
     Eigen::Vector3d pregrasp_vector =
@@ -172,6 +183,9 @@ public:
 
     visual_tools_->publishLine(approach_point, approach_point_min, rviz_visual_tools::GREY);
 
+    visual_tools_->trigger();
+    visual_tools_->prompt("SHOW POST_GRASP_RETREAT");
+
     // SHOW POST_GRASP_RETREAT
     Eigen::Vector3d postgrasp_vector =
         Eigen::Vector3d(grasp_candidates_[50]->grasp_.post_grasp_retreat.direction.vector.x,
@@ -188,6 +202,7 @@ public:
     visual_tools_->publishText(block_pose, "Post-grasp desired", rviz_visual_tools::DARK_GREY,
                                rviz_visual_tools::XSMALL, text);
 
+
     Eigen::Vector3d retreat_point_min =
         ee_pose.translation() -
         ee_pose.rotation() * postgrasp_vector * grasp_candidates_[50]->grasp_.post_grasp_retreat.min_distance;
@@ -199,11 +214,21 @@ public:
 
     visual_tools_->publishLine(retreat_point, retreat_point_min, rviz_visual_tools::DARK_GREY);
 
+    visual_tools_->trigger();
+    visual_tools_->prompt("SHOW ROBOT GRIPPER");
     // SHOW ROBOT GRIPPER
-    std::vector<GraspCandidatePtr> visualized_grasp;
-    visualized_grasp.push_back(grasp_candidates_[50]);
+    // std::vector<GraspCandidatePtr> visualized_grasp;
+    // visualized_grasp.push_back(grasp_candidates_[50]);
+    std::vector<moveit_msgs::Grasp> grasps;
+    for (std::size_t grasp_index=0; grasp_index < 50; grasp_index++)
+      grasps.push_back(grasp_candidates_[grasp_index]->grasp_);
     ROS_WARN_STREAM_NAMED("grasp_poses_visualizer", "TODO enable this");
-    // visual_tools_->publishGrasps(visualized_grasp, grasp_data_->ee_jmg_);
+    // for (auto& visualized_grasp_candidate : visualized_grasp)
+    // {
+      visual_tools_->publishGrasps(grasps, grasp_data_->ee_jmg_);
+      visual_tools_->trigger();
+
+    // }
   }
 
   void generateRandomCuboid(geometry_msgs::Pose& cuboid_pose, double& l, double& w, double& h)
