@@ -110,8 +110,6 @@ public:
     }
   }
 
-  ~SuctionVoxelMatrix();
-
   bool getSuctionVoxel(std::size_t row, std::size_t col, std::shared_ptr<SuctionVoxel>& voxel)
   {
     if (row >= suction_rows_count_)
@@ -153,7 +151,7 @@ public:
     return suction_cols_count_ * suction_rows_count_;
   }
 
-protected:
+public:
   std::size_t suction_rows_count_;
   std::size_t suction_cols_count_;
   double voxel_x_width_;
