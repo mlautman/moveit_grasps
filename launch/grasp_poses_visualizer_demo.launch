@@ -15,7 +15,7 @@
   <!-- Valgrind Arguments -->
   <arg name="valgrind" default="false" />
   <arg unless="$(arg valgrind)" name="launch_prefix3" value="" />
-  <arg     if="$(arg valgrind)" name="launch_prefix3" value="valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes -v" />
+  <arg     if="$(arg valgrind)" name="launch_prefix3" value="valgrind --tool=memcheck --leak-check=full --show-leak-kinds=definite,possible --track-origins=yes -v" />
 
   <!-- PANDA -->
   <include file="$(find moveit_grasps)/launch/load_panda.launch">

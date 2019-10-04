@@ -201,8 +201,8 @@ public:
       grasp_generator_config.disableAll();
       grasp_generator_config.enable_face_grasps_ = true;
       grasp_generator_config.generate_y_axis_grasps_ = true;
-      grasp_generator_config.generate_x_axis_grasps_ = true;
-      grasp_generator_config.generate_z_axis_grasps_ = true;
+      // grasp_generator_config.generate_x_axis_grasps_ = true;
+      // grasp_generator_config.generate_z_axis_grasps_ = true;
 
       grasp_generator_->generateGrasps(visual_tools_->convertPose(object_pose), depth, width, height, grasp_data_,
                                        grasp_candidates, grasp_generator_config);

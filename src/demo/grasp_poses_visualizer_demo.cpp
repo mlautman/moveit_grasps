@@ -180,7 +180,7 @@ public:
     l = rviz_visual_tools::RvizVisualTools::dRand(CUBOID_MIN_SIZE, CUBOID_MAX_SIZE);
     w = rviz_visual_tools::RvizVisualTools::dRand(CUBOID_MIN_SIZE, CUBOID_MAX_SIZE);
     h = rviz_visual_tools::RvizVisualTools::dRand(CUBOID_MIN_SIZE, CUBOID_MAX_SIZE);
-    ROS_INFO_STREAM_NAMED("random_cuboid", "Size = " << l << ", " << w << ", " << h);
+    ROS_INFO_NAMED("random_cuboid", "Size = %f, %f, %f", l, w, h);
 
     // Position
     rviz_visual_tools::RandomPoseBounds pose_bounds(CUBOID_WORKSPACE_MIN_X, CUBOID_WORKSPACE_MAX_X,
