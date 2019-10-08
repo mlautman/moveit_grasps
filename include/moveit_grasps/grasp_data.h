@@ -81,6 +81,7 @@ struct SuctionVoxel
     bottom_right_ = center_point + Eigen::Vector3d(x_width / 2.0, -y_width / 2.0, 0);
   }
 
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   // Voxel center point in tcp frame
   Eigen::Vector3d center_point_;
   double x_width_;
@@ -168,6 +169,7 @@ public:
   }
 
 public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
   std::size_t suction_rows_count_;
   std::size_t suction_cols_count_;
   double voxel_x_width_;
@@ -251,6 +253,8 @@ public:
   void print();
 
 public:
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   // A representation of the gripper type as an integer. See EndEffectorType for values
   EndEffectorType end_effector_type_;
 

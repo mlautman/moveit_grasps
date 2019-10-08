@@ -93,6 +93,8 @@ typedef std::shared_ptr<CuttingPlane> CuttingPlanePtr;
  */
 struct DesiredGraspOrientation
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   Eigen::Isometry3d pose_;
   double max_angle_offset_;
 
@@ -108,6 +110,8 @@ typedef std::shared_ptr<DesiredGraspOrientation> DesiredGraspOrientationPtr;
  */
 struct IkThreadStruct
 {
+  EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
   IkThreadStruct(std::vector<GraspCandidatePtr>& grasp_candidates,  // the input
                  planning_scene::PlanningScenePtr planning_scene, Eigen::Isometry3d& link_transform,
                  std::size_t grasp_id, kinematics::KinematicsBaseConstPtr kin_solver,
