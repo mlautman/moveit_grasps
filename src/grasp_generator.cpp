@@ -110,7 +110,7 @@ bool GraspGenerator::generateCuboidAxisGrasps(const Eigen::Isometry3d& cuboid_po
   Eigen::Vector3d object_size(depth, width, height);
 
   double object_width;
-  std::vector<Eigen::Isometry3d> grasp_poses_tcp;
+  EigenSTL::vector_Isometry3d grasp_poses_tcp;
 
   Eigen::Isometry3d grasp_pose_tcp = cuboid_pose;
   Eigen::Vector3d a_dir, b_dir, c_dir;
@@ -463,7 +463,7 @@ bool GraspGenerator::generateCuboidAxisGrasps(const Eigen::Isometry3d& cuboid_po
 std::size_t GraspGenerator::addFaceGraspsHelper(Eigen::Isometry3d pose, double rotation_angles[3],
                                                 Eigen::Vector3d translation, Eigen::Vector3d delta,
                                                 double alignment_rotation, std::size_t num_grasps,
-                                                std::vector<Eigen::Isometry3d>& grasp_poses_tcp)
+                                                EigenSTL::vector_Isometry3d& grasp_poses_tcp)
 {
   std::size_t num_grasps_added = 0;
   ROS_DEBUG_STREAM_NAMED("cuboid_axis_grasps.helper", "delta = \n" << delta);
@@ -490,7 +490,7 @@ std::size_t GraspGenerator::addFaceGraspsHelper(Eigen::Isometry3d pose, double r
 std::size_t GraspGenerator::addEdgeGraspsHelper(Eigen::Isometry3d pose, double rotation_angles[3],
                                                 Eigen::Vector3d translation, Eigen::Vector3d delta,
                                                 double alignment_rotation, std::size_t num_grasps,
-                                                std::vector<Eigen::Isometry3d>& grasp_poses_tcp, double corner_rotation)
+                                                EigenSTL::vector_Isometry3d& grasp_poses_tcp, double corner_rotation)
 {
   std::size_t num_grasps_added = 0;
   ROS_DEBUG_STREAM_NAMED("cuboid_axis_grasps.helper", "delta = \n" << delta);
@@ -520,7 +520,7 @@ std::size_t GraspGenerator::addEdgeGraspsHelper(Eigen::Isometry3d pose, double r
 std::size_t GraspGenerator::addCornerGraspsHelper(Eigen::Isometry3d pose, double rotation_angles[3],
                                                   Eigen::Vector3d translation, double corner_rotation,
                                                   std::size_t num_radial_grasps,
-                                                  std::vector<Eigen::Isometry3d>& grasp_poses_tcp)
+                                                  EigenSTL::vector_Isometry3d& grasp_poses_tcp)
 {
   std::size_t num_grasps_added = 0;
   double delta_angle = (M_PI / 2.0) / static_cast<double>(num_radial_grasps + 1);
@@ -969,7 +969,7 @@ bool GraspGenerator::generateSuctionGrasps(const Eigen::Isometry3d& cuboid_top_p
                                            const GraspCandidateConfig grasp_candidate_config)
 {
   grasp_candidates.clear();
-  std::vector<Eigen::Isometry3d> grasp_poses_tcp;
+  EigenSTL::vector_Isometry3d grasp_poses_tcp;
   ////////////////
   // Re-orient the cuboid center top grasp so to be as close as possible to the ideal grasp
   ////////////////

@@ -61,6 +61,7 @@
 #include <Eigen/Geometry>
 #include <Eigen/Eigenvalues>
 #include <eigen_conversions/eigen_msg.h>
+#include <Eigen/StdVector>
 
 // Visualization
 #include <moveit_visual_tools/moveit_visual_tools.h>
@@ -255,7 +256,7 @@ public:
    */
   std::size_t addCornerGraspsHelper(Eigen::Isometry3d pose, double rotation_angles[3], Eigen::Vector3d translation,
                                     double corner_rotation, std::size_t num_radial_grasps,
-                                    std::vector<Eigen::Isometry3d>& grasp_poses_tcp);
+                                    EigenSTL::vector_Isometry3d& grasp_poses_tcp);
 
   /**
    * \brief helper function for adding grasps along the face of a cuboid
@@ -270,7 +271,7 @@ public:
    */
   std::size_t addFaceGraspsHelper(Eigen::Isometry3d pose, double rotation_angles[3], Eigen::Vector3d translation,
                                   Eigen::Vector3d delta, double alignment_rotation, std::size_t num_grasps,
-                                  std::vector<Eigen::Isometry3d>& grasp_poses_tcp);
+                                  EigenSTL::vector_Isometry3d& grasp_poses_tcp);
 
   /**
    * \brief helper function for adding grasps along the edges of the cuboid
@@ -285,7 +286,7 @@ public:
    */
   std::size_t addEdgeGraspsHelper(Eigen::Isometry3d cuboid_pose, double rotation_angles[3], Eigen::Vector3d translation,
                                   Eigen::Vector3d delta, double alignment_rotation, std::size_t num_grasps,
-                                  std::vector<Eigen::Isometry3d>& grasp_poses_tcp, double corner_rotation);
+                                  EigenSTL::vector_Isometry3d& grasp_poses_tcp, double corner_rotation);
 
   /**
    * \brief helper function for determining if the grasp will intersect the cuboid
